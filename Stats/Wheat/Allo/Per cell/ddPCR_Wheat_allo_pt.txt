@@ -1,0 +1,263 @@
+[1] "wap1 <- lmer(log(copiesPerNuc) ~ Species*Primer +(1|Individual), data = MyData)"
+[1] "shapiro.test(residuals(wap1))"
+
+	Shapiro-Wilk normality test
+
+data:  residuals(wap1)
+W = 0.98586, p-value = 0.1352
+
+[1] "qqPlot(residuals(wap1))"
+[1]  10 117
+[1] "plot(wap1)"
+[1] "Anova(wap1, type=”III”)"
+Analysis of Deviance Table (Type III Wald chisquare tests)
+
+Response: log(copiesPerNuc)
+                  Chisq Df Pr(>Chisq)    
+(Intercept)    7995.394  1  < 2.2e-16 ***
+Species         186.934  3  < 2.2e-16 ***
+Primer           51.209  3  4.416e-11 ***
+Species:Primer   19.522  9     0.0211 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+[1] "summary(wap1)"
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: log(copiesPerNuc) ~ Species * Primer + (1 | Individual)
+   Data: MyData
+
+REML criterion at convergence: -87.2
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-2.51596 -0.48205  0.04781  0.50557  2.64240 
+
+Random effects:
+ Groups     Name        Variance Std.Dev.
+ Individual (Intercept) 0.05112  0.2261  
+ Residual               0.01099  0.1048  
+Number of obs: 148, groups:  Individual, 37
+
+Fixed effects:
+                        Estimate Std. Error       df t value Pr(>|t|)    
+(Intercept)              7.04688    0.07881 43.53360  89.417  < 2e-16 ***
+SpeciesTa-6X             1.35089    0.11145 43.53360  12.121 1.52e-15 ***
+SpeciesTt-4X             1.13319    0.11145 43.53360  10.167 4.51e-13 ***
+SpeciesTu-2X             0.39003    0.12282 43.53360   3.176  0.00275 ** 
+PrimerclpP               0.30000    0.04689 99.00000   6.399 5.24e-09 ***
+PrimerndhB               0.27097    0.04689 99.00000   5.779 8.72e-08 ***
+PrimerpsaA               0.23548    0.04689 99.00000   5.023 2.26e-06 ***
+SpeciesTa-6X:PrimerclpP -0.10313    0.06631 99.00000  -1.555  0.12304    
+SpeciesTt-4X:PrimerclpP -0.03942    0.06631 99.00000  -0.595  0.55350    
+SpeciesTu-2X:PrimerclpP -0.21551    0.07307 99.00000  -2.949  0.00397 ** 
+SpeciesTa-6X:PrimerndhB -0.18803    0.06631 99.00000  -2.836  0.00554 ** 
+SpeciesTt-4X:PrimerndhB -0.11795    0.06631 99.00000  -1.779  0.07834 .  
+SpeciesTu-2X:PrimerndhB -0.20043    0.07307 99.00000  -2.743  0.00722 ** 
+SpeciesTa-6X:PrimerpsaA -0.16791    0.06631 99.00000  -2.532  0.01290 *  
+SpeciesTt-4X:PrimerpsaA -0.14995    0.06631 99.00000  -2.261  0.02592 *  
+SpeciesTu-2X:PrimerpsaA -0.21876    0.07307 99.00000  -2.994  0.00348 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+[1] "emmeans(wap1, pairwise ~ Species, lmer.df = 'satterthwaite', adjust = 'holm')"
+$emmeans
+ Species emmean     SE df lower.CL upper.CL
+ As-2X     7.25 0.0734 33     7.10     7.40
+ Ta-6X     8.48 0.0734 33     8.34     8.63
+ Tt-4X     8.30 0.0734 33     8.16     8.45
+ Tu-2X     7.48 0.0877 33     7.30     7.66
+
+Results are averaged over the levels of: Primer 
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast          estimate    SE df t.ratio p.value
+ (As-2X) - (Ta-6X)   -1.236 0.104 33 -11.909 <.0001 
+ (As-2X) - (Tt-4X)   -1.056 0.104 33 -10.178 <.0001 
+ (As-2X) - (Tu-2X)   -0.231 0.114 33  -2.023 0.1025 
+ (Ta-6X) - (Tt-4X)    0.180 0.104 33   1.732 0.1025 
+ (Ta-6X) - (Tu-2X)    1.005 0.114 33   8.785 <.0001 
+ (Tt-4X) - (Tu-2X)    0.825 0.114 33   7.213 <.0001 
+
+Results are averaged over the levels of: Primer 
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+P value adjustment: holm method for 6 tests 
+
+[1] "emmeans(wap1, pairwise ~ Primer, lmer.df = 'satterthwaite', adjust = 'none')"
+$emmeans
+ Primer emmean     SE   df lower.CL upper.CL
+ ccsA     7.77 0.0415 43.5     7.68     7.85
+ clpP     7.98 0.0415 43.5     7.89     8.06
+ ndhB     7.91 0.0415 43.5     7.83     7.99
+ psaA     7.87 0.0415 43.5     7.78     7.95
+
+Results are averaged over the levels of: Species 
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast    estimate     SE df t.ratio p.value
+ ccsA - clpP  -0.2105 0.0247 99 -8.533  <.0001 
+ ccsA - ndhB  -0.1444 0.0247 99 -5.853  <.0001 
+ ccsA - psaA  -0.1013 0.0247 99 -4.108  0.0001 
+ clpP - ndhB   0.0661 0.0247 99  2.681  0.0086 
+ clpP - psaA   0.1092 0.0247 99  4.425  <.0001 
+ ndhB - psaA   0.0430 0.0247 99  1.745  0.0841 
+
+Results are averaged over the levels of: Species 
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+
+[1] "emmeans(wap1, pairwise ~ Species*Primer, lmer.df = 'satterthwaite', adjust = 'none')"
+$emmeans
+ Species Primer emmean     SE   df lower.CL upper.CL
+ As-2X   ccsA     7.05 0.0788 43.5     6.89     7.21
+ Ta-6X   ccsA     8.40 0.0788 43.5     8.24     8.56
+ Tt-4X   ccsA     8.18 0.0788 43.5     8.02     8.34
+ Tu-2X   ccsA     7.44 0.0942 43.5     7.25     7.63
+ As-2X   clpP     7.35 0.0788 43.5     7.19     7.51
+ Ta-6X   clpP     8.59 0.0788 43.5     8.44     8.75
+ Tt-4X   clpP     8.44 0.0788 43.5     8.28     8.60
+ Tu-2X   clpP     7.52 0.0942 43.5     7.33     7.71
+ As-2X   ndhB     7.32 0.0788 43.5     7.16     7.48
+ Ta-6X   ndhB     8.48 0.0788 43.5     8.32     8.64
+ Tt-4X   ndhB     8.33 0.0788 43.5     8.17     8.49
+ Tu-2X   ndhB     7.51 0.0942 43.5     7.32     7.70
+ As-2X   psaA     7.28 0.0788 43.5     7.12     7.44
+ Ta-6X   psaA     8.47 0.0788 43.5     8.31     8.62
+ Tt-4X   psaA     8.27 0.0788 43.5     8.11     8.42
+ Tu-2X   psaA     7.45 0.0942 43.5     7.26     7.64
+
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast                    estimate     SE   df t.ratio p.value
+ (As-2X ccsA) - (Ta-6X ccsA)  -1.3509 0.1115 43.5 -12.121 <.0001 
+ (As-2X ccsA) - (Tt-4X ccsA)  -1.1332 0.1115 43.5 -10.167 <.0001 
+ (As-2X ccsA) - (Tu-2X ccsA)  -0.3900 0.1228 43.5  -3.176 0.0027 
+ (As-2X ccsA) - (As-2X clpP)  -0.3000 0.0469 99.0  -6.399 <.0001 
+ (As-2X ccsA) - (Ta-6X clpP)  -1.5478 0.1115 43.5 -13.887 <.0001 
+ (As-2X ccsA) - (Tt-4X clpP)  -1.3938 0.1115 43.5 -12.505 <.0001 
+ (As-2X ccsA) - (Tu-2X clpP)  -0.4745 0.1228 43.5  -3.864 0.0004 
+ (As-2X ccsA) - (As-2X ndhB)  -0.2710 0.0469 99.0  -5.779 <.0001 
+ (As-2X ccsA) - (Ta-6X ndhB)  -1.4338 0.1115 43.5 -12.865 <.0001 
+ (As-2X ccsA) - (Tt-4X ndhB)  -1.2862 0.1115 43.5 -11.540 <.0001 
+ (As-2X ccsA) - (Tu-2X ndhB)  -0.4606 0.1228 43.5  -3.750 0.0005 
+ (As-2X ccsA) - (As-2X psaA)  -0.2355 0.0469 99.0  -5.023 <.0001 
+ (As-2X ccsA) - (Ta-6X psaA)  -1.4185 0.1115 43.5 -12.727 <.0001 
+ (As-2X ccsA) - (Tt-4X psaA)  -1.2187 0.1115 43.5 -10.935 <.0001 
+ (As-2X ccsA) - (Tu-2X psaA)  -0.4068 0.1228 43.5  -3.312 0.0019 
+ (Ta-6X ccsA) - (Tt-4X ccsA)   0.2177 0.1115 43.5   1.953 0.0572 
+ (Ta-6X ccsA) - (Tu-2X ccsA)   0.9609 0.1228 43.5   7.824 <.0001 
+ (Ta-6X ccsA) - (As-2X clpP)   1.0509 0.1115 43.5   9.429 <.0001 
+ (Ta-6X ccsA) - (Ta-6X clpP)  -0.1969 0.0469 99.0  -4.199 0.0001 
+ (Ta-6X ccsA) - (Tt-4X clpP)  -0.0429 0.1115 43.5  -0.385 0.7023 
+ (Ta-6X ccsA) - (Tu-2X clpP)   0.8764 0.1228 43.5   7.136 <.0001 
+ (Ta-6X ccsA) - (As-2X ndhB)   1.0799 0.1115 43.5   9.690 <.0001 
+ (Ta-6X ccsA) - (Ta-6X ndhB)  -0.0829 0.0469 99.0  -1.769 0.0800 
+ (Ta-6X ccsA) - (Tt-4X ndhB)   0.0647 0.1115 43.5   0.580 0.5647 
+ (Ta-6X ccsA) - (Tu-2X ndhB)   0.8903 0.1228 43.5   7.249 <.0001 
+ (Ta-6X ccsA) - (As-2X psaA)   1.1154 0.1115 43.5  10.008 <.0001 
+ (Ta-6X ccsA) - (Ta-6X psaA)  -0.0676 0.0469 99.0  -1.441 0.1527 
+ (Ta-6X ccsA) - (Tt-4X psaA)   0.1322 0.1115 43.5   1.186 0.2421 
+ (Ta-6X ccsA) - (Tu-2X psaA)   0.9441 0.1228 43.5   7.687 <.0001 
+ (Tt-4X ccsA) - (Tu-2X ccsA)   0.7432 0.1228 43.5   6.051 <.0001 
+ (Tt-4X ccsA) - (As-2X clpP)   0.8332 0.1115 43.5   7.476 <.0001 
+ (Tt-4X ccsA) - (Ta-6X clpP)  -0.4146 0.1115 43.5  -3.720 0.0006 
+ (Tt-4X ccsA) - (Tt-4X clpP)  -0.2606 0.0469 99.0  -5.558 <.0001 
+ (Tt-4X ccsA) - (Tu-2X clpP)   0.6587 0.1228 43.5   5.363 <.0001 
+ (Tt-4X ccsA) - (As-2X ndhB)   0.8622 0.1115 43.5   7.736 <.0001 
+ (Tt-4X ccsA) - (Ta-6X ndhB)  -0.3006 0.1115 43.5  -2.697 0.0099 
+ (Tt-4X ccsA) - (Tt-4X ndhB)  -0.1530 0.0469 99.0  -3.264 0.0015 
+ (Tt-4X ccsA) - (Tu-2X ndhB)   0.6726 0.1228 43.5   5.477 <.0001 
+ (Tt-4X ccsA) - (As-2X psaA)   0.8977 0.1115 43.5   8.055 <.0001 
+ (Tt-4X ccsA) - (Ta-6X psaA)  -0.2853 0.1115 43.5  -2.560 0.0140 
+ (Tt-4X ccsA) - (Tt-4X psaA)  -0.0855 0.0469 99.0  -1.824 0.0711 
+ (Tt-4X ccsA) - (Tu-2X psaA)   0.7264 0.1228 43.5   5.915 <.0001 
+ (Tu-2X ccsA) - (As-2X clpP)   0.0900 0.1228 43.5   0.733 0.4675 
+ (Tu-2X ccsA) - (Ta-6X clpP)  -1.1577 0.1228 43.5  -9.427 <.0001 
+ (Tu-2X ccsA) - (Tt-4X clpP)  -1.0037 0.1228 43.5  -8.173 <.0001 
+ (Tu-2X ccsA) - (Tu-2X clpP)  -0.0845 0.0560 99.0  -1.508 0.1348 
+ (Tu-2X ccsA) - (As-2X ndhB)   0.1191 0.1228 43.5   0.969 0.3377 
+ (Tu-2X ccsA) - (Ta-6X ndhB)  -1.0438 0.1228 43.5  -8.499 <.0001 
+ (Tu-2X ccsA) - (Tt-4X ndhB)  -0.8962 0.1228 43.5  -7.297 <.0001 
+ (Tu-2X ccsA) - (Tu-2X ndhB)  -0.0705 0.0560 99.0  -1.259 0.2111 
+ (Tu-2X ccsA) - (As-2X psaA)   0.1545 0.1228 43.5   1.258 0.2150 
+ (Tu-2X ccsA) - (Ta-6X psaA)  -1.0284 0.1228 43.5  -8.374 <.0001 
+ (Tu-2X ccsA) - (Tt-4X psaA)  -0.8287 0.1228 43.5  -6.747 <.0001 
+ (Tu-2X ccsA) - (Tu-2X psaA)  -0.0167 0.0560 99.0  -0.298 0.7660 
+ (As-2X clpP) - (Ta-6X clpP)  -1.2478 0.1115 43.5 -11.195 <.0001 
+ (As-2X clpP) - (Tt-4X clpP)  -1.0938 0.1115 43.5  -9.814 <.0001 
+ (As-2X clpP) - (Tu-2X clpP)  -0.1745 0.1228 43.5  -1.421 0.1624 
+ (As-2X clpP) - (As-2X ndhB)   0.0290 0.0469 99.0   0.619 0.5371 
+ (As-2X clpP) - (Ta-6X ndhB)  -1.1338 0.1115 43.5 -10.173 <.0001 
+ (As-2X clpP) - (Tt-4X ndhB)  -0.9862 0.1115 43.5  -8.849 <.0001 
+ (As-2X clpP) - (Tu-2X ndhB)  -0.1606 0.1228 43.5  -1.307 0.1980 
+ (As-2X clpP) - (As-2X psaA)   0.0645 0.0469 99.0   1.376 0.1719 
+ (As-2X clpP) - (Ta-6X psaA)  -1.1185 0.1115 43.5 -10.035 <.0001 
+ (As-2X clpP) - (Tt-4X psaA)  -0.9187 0.1115 43.5  -8.243 <.0001 
+ (As-2X clpP) - (Tu-2X psaA)  -0.1067 0.1228 43.5  -0.869 0.3895 
+ (Ta-6X clpP) - (Tt-4X clpP)   0.1540 0.1115 43.5   1.382 0.1741 
+ (Ta-6X clpP) - (Tu-2X clpP)   1.0732 0.1228 43.5   8.739 <.0001 
+ (Ta-6X clpP) - (As-2X ndhB)   1.2768 0.1115 43.5  11.456 <.0001 
+ (Ta-6X clpP) - (Ta-6X ndhB)   0.1139 0.0469 99.0   2.430 0.0169 
+ (Ta-6X clpP) - (Tt-4X ndhB)   0.2616 0.1115 43.5   2.347 0.0236 
+ (Ta-6X clpP) - (Tu-2X ndhB)   1.0872 0.1228 43.5   8.852 <.0001 
+ (Ta-6X clpP) - (As-2X psaA)   1.3123 0.1115 43.5  11.774 <.0001 
+ (Ta-6X clpP) - (Ta-6X psaA)   0.1293 0.0469 99.0   2.758 0.0069 
+ (Ta-6X clpP) - (Tt-4X psaA)   0.3290 0.1115 43.5   2.952 0.0051 
+ (Ta-6X clpP) - (Tu-2X psaA)   1.1410 0.1228 43.5   9.290 <.0001 
+ (Tt-4X clpP) - (Tu-2X clpP)   0.9192 0.1228 43.5   7.485 <.0001 
+ (Tt-4X clpP) - (As-2X ndhB)   1.1228 0.1115 43.5  10.074 <.0001 
+ (Tt-4X clpP) - (Ta-6X ndhB)  -0.0401 0.1115 43.5  -0.359 0.7210 
+ (Tt-4X clpP) - (Tt-4X ndhB)   0.1076 0.0469 99.0   2.294 0.0239 
+ (Tt-4X clpP) - (Tu-2X ndhB)   0.9332 0.1228 43.5   7.598 <.0001 
+ (Tt-4X clpP) - (As-2X psaA)   1.1583 0.1115 43.5  10.393 <.0001 
+ (Tt-4X clpP) - (Ta-6X psaA)  -0.0247 0.1115 43.5  -0.222 0.8257 
+ (Tt-4X clpP) - (Tt-4X psaA)   0.1750 0.0469 99.0   3.733 0.0003 
+ (Tt-4X clpP) - (Tu-2X psaA)   0.9870 0.1228 43.5   8.037 <.0001 
+ (Tu-2X clpP) - (As-2X ndhB)   0.2036 0.1228 43.5   1.657 0.1046 
+ (Tu-2X clpP) - (Ta-6X ndhB)  -0.9593 0.1228 43.5  -7.811 <.0001 
+ (Tu-2X clpP) - (Tt-4X ndhB)  -0.8117 0.1228 43.5  -6.609 <.0001 
+ (Tu-2X clpP) - (Tu-2X ndhB)   0.0140 0.0560 99.0   0.249 0.8038 
+ (Tu-2X clpP) - (As-2X psaA)   0.2390 0.1228 43.5   1.946 0.0581 
+ (Tu-2X clpP) - (Ta-6X psaA)  -0.9439 0.1228 43.5  -7.686 <.0001 
+ (Tu-2X clpP) - (Tt-4X psaA)  -0.7442 0.1228 43.5  -6.059 <.0001 
+ (Tu-2X clpP) - (Tu-2X psaA)   0.0678 0.0560 99.0   1.209 0.2294 
+ (As-2X ndhB) - (Ta-6X ndhB)  -1.1629 0.1115 43.5 -10.434 <.0001 
+ (As-2X ndhB) - (Tt-4X ndhB)  -1.0152 0.1115 43.5  -9.109 <.0001 
+ (As-2X ndhB) - (Tu-2X ndhB)  -0.1896 0.1228 43.5  -1.544 0.1299 
+ (As-2X ndhB) - (As-2X psaA)   0.0355 0.0469 99.0   0.757 0.4510 
+ (As-2X ndhB) - (Ta-6X psaA)  -1.1475 0.1115 43.5 -10.296 <.0001 
+ (As-2X ndhB) - (Tt-4X psaA)  -0.9478 0.1115 43.5  -8.504 <.0001 
+ (As-2X ndhB) - (Tu-2X psaA)  -0.1358 0.1228 43.5  -1.106 0.2750 
+ (Ta-6X ndhB) - (Tt-4X ndhB)   0.1476 0.1115 43.5   1.324 0.1922 
+ (Ta-6X ndhB) - (Tu-2X ndhB)   0.9733 0.1228 43.5   7.925 <.0001 
+ (Ta-6X ndhB) - (As-2X psaA)   1.1983 0.1115 43.5  10.752 <.0001 
+ (Ta-6X ndhB) - (Ta-6X psaA)   0.0154 0.0469 99.0   0.328 0.7439 
+ (Ta-6X ndhB) - (Tt-4X psaA)   0.2151 0.1115 43.5   1.930 0.0601 
+ (Ta-6X ndhB) - (Tu-2X psaA)   1.0271 0.1228 43.5   8.363 <.0001 
+ (Tt-4X ndhB) - (Tu-2X ndhB)   0.8256 0.1228 43.5   6.723 <.0001 
+ (Tt-4X ndhB) - (As-2X psaA)   1.0507 0.1115 43.5   9.428 <.0001 
+ (Tt-4X ndhB) - (Ta-6X psaA)  -0.1323 0.1115 43.5  -1.187 0.2418 
+ (Tt-4X ndhB) - (Tt-4X psaA)   0.0675 0.0469 99.0   1.439 0.1532 
+ (Tt-4X ndhB) - (Tu-2X psaA)   0.8795 0.1228 43.5   7.161 <.0001 
+ (Tu-2X ndhB) - (As-2X psaA)   0.2251 0.1228 43.5   1.833 0.0737 
+ (Tu-2X ndhB) - (Ta-6X psaA)  -0.9579 0.1228 43.5  -7.800 <.0001 
+ (Tu-2X ndhB) - (Tt-4X psaA)  -0.7582 0.1228 43.5  -6.173 <.0001 
+ (Tu-2X ndhB) - (Tu-2X psaA)   0.0538 0.0560 99.0   0.960 0.3392 
+ (As-2X psaA) - (Ta-6X psaA)  -1.1830 0.1115 43.5 -10.614 <.0001 
+ (As-2X psaA) - (Tt-4X psaA)  -0.9832 0.1115 43.5  -8.822 <.0001 
+ (As-2X psaA) - (Tu-2X psaA)  -0.1713 0.1228 43.5  -1.395 0.1702 
+ (Ta-6X psaA) - (Tt-4X psaA)   0.1997 0.1115 43.5   1.792 0.0801 
+ (Ta-6X psaA) - (Tu-2X psaA)   1.0117 0.1228 43.5   8.238 <.0001 
+ (Tt-4X psaA) - (Tu-2X psaA)   0.8120 0.1228 43.5   6.611 <.0001 
+
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+

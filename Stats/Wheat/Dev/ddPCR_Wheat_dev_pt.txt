@@ -1,0 +1,168 @@
+[1] "wdp1 <- lmer(log(copiesPerNuc) ~ SamplingTime*Primer +(1|Individual), data = MyData)"
+[1] "shapiro.test(residuals(wdp1))"
+
+	Shapiro-Wilk normality test
+
+data:  residuals(wdp1)
+W = 0.91969, p-value = 2.838e-09
+
+[1] "qqPlot(residuals(wdp1))"
+[1] 100 121
+[1] "plot(wdp1)"
+[1] "Anova(wdp1, type=3)"
+Analysis of Deviance Table (Type III Wald chisquare tests)
+
+Response: log(copiesPerNuc)
+                        Chisq Df Pr(>Chisq)    
+(Intercept)         3675.3955  1  < 2.2e-16 ***
+SamplingTime          38.6319  2  4.085e-09 ***
+Primer                 0.2760  2     0.8711    
+SamplingTime:Primer    3.9609  4     0.4113    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+[1] "summary(wdp1)"
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: log(copiesPerNuc) ~ SamplingTime * Primer + (1 | Individual)
+   Data: MyData
+
+REML criterion at convergence: 106.2
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-4.6741 -0.4371  0.0041  0.6145  2.4146 
+
+Random effects:
+ Groups     Name        Variance Std.Dev.
+ Individual (Intercept) 0.07119  0.2668  
+ Residual               0.07567  0.2751  
+Number of obs: 210, groups:  Individual, 10
+
+Fixed effects:
+                           Estimate Std. Error        df t value Pr(>|t|)    
+(Intercept)                 7.34688    0.12119  33.24903  60.625  < 2e-16 ***
+SamplingTimeS2              0.61514    0.10044 192.00000   6.124 5.04e-09 ***
+SamplingTimeS3              0.39090    0.10044 192.00000   3.892 0.000137 ***
+PrimerndhB                 -0.02904    0.12302 192.00000  -0.236 0.813657    
+PrimerpsaA                 -0.06452    0.12302 192.00000  -0.524 0.600555    
+SamplingTimeS2:PrimerndhB  -0.03288    0.14205 192.00000  -0.231 0.817211    
+SamplingTimeS3:PrimerndhB  -0.02052    0.14205 192.00000  -0.144 0.885286    
+SamplingTimeS2:PrimerpsaA  -0.21007    0.14205 192.00000  -1.479 0.140817    
+SamplingTimeS3:PrimerpsaA  -0.05825    0.14205 192.00000  -0.410 0.682193    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) SmpTS2 SmpTS3 PrmrnB PrmrpA STS2:PB STS3:PB STS2:PA
+SamplngTmS2 -0.622                                                    
+SamplngTmS3 -0.622  0.750                                             
+PrimerndhB  -0.508  0.612  0.612                                      
+PrimerpsaA  -0.508  0.612  0.612  0.500                               
+SmplnTS2:PB  0.440 -0.707 -0.530 -0.866 -0.433                        
+SmplnTS3:PB  0.440 -0.530 -0.707 -0.866 -0.433  0.750                 
+SmplnTS2:PA  0.440 -0.707 -0.530 -0.433 -0.866  0.500   0.375         
+SmplnTS3:PA  0.440 -0.530 -0.707 -0.433 -0.866  0.375   0.500   0.750 
+[1] "emmeans(wdp1, pairwise ~ SamplingTime, lmer.df = 'satterthwaite', adjust = 'holm')"
+$emmeans
+ SamplingTime emmean     SE   df lower.CL upper.CL
+ S1             7.32 0.0982 14.9     7.11     7.53
+ S2             7.85 0.0892 10.2     7.65     8.05
+ S3             7.68 0.0892 10.2     7.48     7.88
+
+Results are averaged over the levels of: Primer 
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast estimate    SE  df t.ratio p.value
+ S1 - S2    -0.534 0.058 192 -9.211  <.0001 
+ S1 - S3    -0.365 0.058 192 -6.288  <.0001 
+ S2 - S3     0.170 0.041 192  4.134  0.0001 
+
+Results are averaged over the levels of: Primer 
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+P value adjustment: holm method for 3 tests 
+
+[1] "emmeans(wdp1, pairwise ~ Primer, lmer.df = 'satterthwaite', adjust = 'none')"
+$emmeans
+ Primer emmean     SE   df lower.CL upper.CL
+ clpP     7.68 0.0923 11.7     7.48     7.88
+ ndhB     7.64 0.0923 11.7     7.43     7.84
+ psaA     7.53 0.0923 11.7     7.33     7.73
+
+Results are averaged over the levels of: SamplingTime 
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast    estimate     SE  df t.ratio p.value
+ clpP - ndhB   0.0468 0.0529 192 0.885   0.3774 
+ clpP - psaA   0.1540 0.0529 192 2.908   0.0041 
+ ndhB - psaA   0.1071 0.0529 192 2.024   0.0444 
+
+Results are averaged over the levels of: SamplingTime 
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+
+[1] "emmeans(wdp1, pairwise ~ SamplingTime*Primer, lmer.df = 'satterthwaite', adjust = 'none')"
+$emmeans
+ SamplingTime Primer emmean     SE   df lower.CL upper.CL
+ S1           clpP     7.35 0.1212 33.2     7.10     7.59
+ S2           clpP     7.96 0.0982 14.9     7.75     8.17
+ S3           clpP     7.74 0.0982 14.9     7.53     7.95
+ S1           ndhB     7.32 0.1212 33.2     7.07     7.56
+ S2           ndhB     7.90 0.0982 14.9     7.69     8.11
+ S3           ndhB     7.69 0.0982 14.9     7.48     7.90
+ S1           psaA     7.28 0.1212 33.2     7.04     7.53
+ S2           psaA     7.69 0.0982 14.9     7.48     7.90
+ S3           psaA     7.62 0.0982 14.9     7.41     7.82
+
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast           estimate    SE  df t.ratio p.value
+ S1 clpP - S2 clpP -0.615143 0.100 192 -6.124  <.0001 
+ S1 clpP - S3 clpP -0.390902 0.100 192 -3.892  0.0001 
+ S1 clpP - S1 ndhB  0.029036 0.123 192  0.236  0.8137 
+ S1 clpP - S2 ndhB -0.553230 0.100 192 -5.508  <.0001 
+ S1 clpP - S3 ndhB -0.341345 0.100 192 -3.398  0.0008 
+ S1 clpP - S1 psaA  0.064519 0.123 192  0.524  0.6006 
+ S1 clpP - S2 psaA -0.340556 0.100 192 -3.391  0.0008 
+ S1 clpP - S3 psaA -0.268130 0.100 192 -2.669  0.0082 
+ S2 clpP - S3 clpP  0.224241 0.071 192  3.157  0.0018 
+ S2 clpP - S1 ndhB  0.644179 0.100 192  6.413  <.0001 
+ S2 clpP - S2 ndhB  0.061913 0.071 192  0.872  0.3844 
+ S2 clpP - S3 ndhB  0.273798 0.071 192  3.855  0.0002 
+ S2 clpP - S1 psaA  0.679662 0.100 192  6.767  <.0001 
+ S2 clpP - S2 psaA  0.274587 0.071 192  3.866  0.0002 
+ S2 clpP - S3 psaA  0.347013 0.071 192  4.886  <.0001 
+ S3 clpP - S1 ndhB  0.419938 0.100 192  4.181  <.0001 
+ S3 clpP - S2 ndhB -0.162328 0.071 192 -2.286  0.0234 
+ S3 clpP - S3 ndhB  0.049557 0.071 192  0.698  0.4862 
+ S3 clpP - S1 psaA  0.455420 0.100 192  4.534  <.0001 
+ S3 clpP - S2 psaA  0.050345 0.071 192  0.709  0.4793 
+ S3 clpP - S3 psaA  0.122772 0.071 192  1.729  0.0855 
+ S1 ndhB - S2 ndhB -0.582266 0.100 192 -5.797  <.0001 
+ S1 ndhB - S3 ndhB -0.370381 0.100 192 -3.687  0.0003 
+ S1 ndhB - S1 psaA  0.035483 0.123 192  0.288  0.7733 
+ S1 ndhB - S2 psaA -0.369592 0.100 192 -3.680  0.0003 
+ S1 ndhB - S3 psaA -0.297166 0.100 192 -2.959  0.0035 
+ S2 ndhB - S3 ndhB  0.211885 0.071 192  2.983  0.0032 
+ S2 ndhB - S1 psaA  0.617748 0.100 192  6.150  <.0001 
+ S2 ndhB - S2 psaA  0.212673 0.071 192  2.994  0.0031 
+ S2 ndhB - S3 psaA  0.285100 0.071 192  4.014  0.0001 
+ S3 ndhB - S1 psaA  0.405863 0.100 192  4.041  0.0001 
+ S3 ndhB - S2 psaA  0.000788 0.071 192  0.011  0.9912 
+ S3 ndhB - S3 psaA  0.073215 0.071 192  1.031  0.3039 
+ S1 psaA - S2 psaA -0.405075 0.100 192 -4.033  0.0001 
+ S1 psaA - S3 psaA -0.332649 0.100 192 -3.312  0.0011 
+ S2 psaA - S3 psaA  0.072427 0.071 192  1.020  0.3091 
+
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+

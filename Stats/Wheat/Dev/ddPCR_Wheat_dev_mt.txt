@@ -1,0 +1,135 @@
+[1] "wdm1 <- lmer(log(copiesPerNuc) ~ SamplingTime*Primer +(1|Individual), data = MyData)"
+[1] "shapiro.test(residuals(wdm1))"
+
+	Shapiro-Wilk normality test
+
+data:  residuals(wdm1)
+W = 0.94625, p-value = 3.068e-05
+
+[1] "qqPlot(residuals(wdm1))"
+[1] 50 64
+[1] "plot(wdm1)"
+[1] "Anova(wdm1, type=3)"
+Analysis of Deviance Table (Type III Wald chisquare tests)
+
+Response: log(copiesPerNuc)
+                        Chisq Df Pr(>Chisq)    
+(Intercept)         4280.6529  1  < 2.2e-16 ***
+SamplingTime           7.6637  2    0.02167 *  
+Primer                41.9532  1  9.348e-11 ***
+SamplingTime:Primer    3.1971  2    0.20219    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+[1] "summary(wdm1)"
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: log(copiesPerNuc) ~ SamplingTime * Primer + (1 | Individual)
+   Data: MyData
+
+REML criterion at convergence: -100.7
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-4.7504 -0.4395  0.0061  0.5004  2.8011 
+
+Random effects:
+ Groups     Name        Variance Std.Dev.
+ Individual (Intercept) 0.006938 0.08329 
+ Residual               0.021497 0.14662 
+Number of obs: 140, groups:  Individual, 10
+
+Fixed effects:
+                           Estimate Std. Error        df t value Pr(>|t|)    
+(Intercept)                 3.48882    0.05332  72.41798  65.427  < 2e-16 ***
+SamplingTimeS2              0.14783    0.05354 125.00000   2.761  0.00663 ** 
+SamplingTimeS3              0.11792    0.05354 125.00000   2.203  0.02946 *  
+Primerrps1                  0.42470    0.06557 125.00000   6.477 1.94e-09 ***
+SamplingTimeS2:Primerrps1  -0.13363    0.07571 125.00000  -1.765  0.08001 .  
+SamplingTimeS3:Primerrps1  -0.11456    0.07571 125.00000  -1.513  0.13279    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) SmpTS2 SmpTS3 Prmrr1 STS2:P
+SamplngTmS2 -0.753                            
+SamplngTmS3 -0.753  0.750                     
+Primerrps1  -0.615  0.612  0.612              
+SmplnTS2:P1  0.532 -0.707 -0.530 -0.866       
+SmplnTS3:P1  0.532 -0.530 -0.707 -0.866  0.750
+[1] "emmeans(wdm1, pairwise ~ SamplingTime, lmer.df = 'satterthwaite', adjust = 'holm')"
+$emmeans
+ SamplingTime emmean     SE   df lower.CL upper.CL
+ S1             3.70 0.0421 36.1     3.62     3.79
+ S2             3.78 0.0324 13.8     3.71     3.85
+ S3             3.76 0.0324 13.8     3.69     3.83
+
+Results are averaged over the levels of: Primer 
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast estimate     SE  df t.ratio p.value
+ S1 - S2   -0.0810 0.0379 125 -2.140  0.1029 
+ S1 - S3   -0.0606 0.0379 125 -1.602  0.2234 
+ S2 - S3    0.0204 0.0268 125  0.761  0.4481 
+
+Results are averaged over the levels of: Primer 
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+P value adjustment: holm method for 3 tests 
+
+[1] "emmeans(wdm1, pairwise ~ Primer, lmer.df = 'satterthwaite', adjust = 'none')"
+$emmeans
+ Primer emmean    SE   df lower.CL upper.CL
+ atp6     3.58 0.033 14.9     3.51     3.65
+ rps1     3.92 0.033 14.9     3.85     3.99
+
+Results are averaged over the levels of: SamplingTime 
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast    estimate     SE  df t.ratio p.value
+ atp6 - rps1   -0.342 0.0282 125 -12.120 <.0001 
+
+Results are averaged over the levels of: SamplingTime 
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+
+[1] "emmeans(wdm1, pairwise ~ SamplingTime*Primer, lmer.df = 'satterthwaite', adjust = 'none')"
+$emmeans
+ SamplingTime Primer emmean     SE   df lower.CL upper.CL
+ S1           atp6     3.49 0.0533 72.4     3.38     3.60
+ S2           atp6     3.64 0.0376 24.2     3.56     3.71
+ S3           atp6     3.61 0.0376 24.2     3.53     3.68
+ S1           rps1     3.91 0.0533 72.4     3.81     4.02
+ S2           rps1     3.93 0.0376 24.2     3.85     4.01
+ S3           rps1     3.92 0.0376 24.2     3.84     3.99
+
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast          estimate     SE  df t.ratio p.value
+ S1 atp6 - S2 atp6 -0.14783 0.0535 125 -2.761  0.0066 
+ S1 atp6 - S3 atp6 -0.11792 0.0535 125 -2.203  0.0295 
+ S1 atp6 - S1 rps1 -0.42470 0.0656 125 -6.477  <.0001 
+ S1 atp6 - S2 rps1 -0.43890 0.0535 125 -8.198  <.0001 
+ S1 atp6 - S3 rps1 -0.42807 0.0535 125 -7.996  <.0001 
+ S2 atp6 - S3 atp6  0.02991 0.0379 125  0.790  0.4310 
+ S2 atp6 - S1 rps1 -0.27688 0.0535 125 -5.172  <.0001 
+ S2 atp6 - S2 rps1 -0.29107 0.0379 125 -7.689  <.0001 
+ S2 atp6 - S3 rps1 -0.28024 0.0379 125 -7.403  <.0001 
+ S3 atp6 - S1 rps1 -0.30679 0.0535 125 -5.730  <.0001 
+ S3 atp6 - S2 rps1 -0.32098 0.0379 125 -8.479  <.0001 
+ S3 atp6 - S3 rps1 -0.31015 0.0379 125 -8.193  <.0001 
+ S1 rps1 - S2 rps1 -0.01419 0.0535 125 -0.265  0.7914 
+ S1 rps1 - S3 rps1 -0.00336 0.0535 125 -0.063  0.9500 
+ S2 rps1 - S3 rps1  0.01083 0.0379 125  0.286  0.7752 
+
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+

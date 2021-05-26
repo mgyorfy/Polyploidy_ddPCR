@@ -1,0 +1,220 @@
+[1] "aam2 <- lmer(log(copiesPerNucAdjusted) ~ Species*Primer +(1|Individual), data = MyData)"
+[1] "shapiro.test(residuals(aam2))"
+
+	Shapiro-Wilk normality test
+
+data:  residuals(aam2)
+W = 0.89395, p-value = 9.745e-08
+
+[1] "qqPlot(residuals(aam2))"
+[1] 24 14
+[1] "plot(aam2)"
+[1] "Anova(aam2, type=3)"
+Analysis of Deviance Table (Type III Wald chisquare tests)
+
+Response: log(copiesPerNucAdjusted)
+                 Chisq Df Pr(>Chisq)    
+(Intercept)    396.781  1    < 2e-16 ***
+Species         11.951  2    0.00254 ** 
+Primer         224.722  3    < 2e-16 ***
+Species:Primer 358.000  6    < 2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+[1] "summary(aam2)"
+Linear mixed model fit by REML ['lmerMod']
+Formula: log(copiesPerNucAdjusted) ~ Species * Primer + (1 | Individual)
+   Data: MyData
+
+REML criterion at convergence: -64.9
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.7792 -0.5385  0.0818  0.4625  3.7007 
+
+Random effects:
+ Groups     Name        Variance Std.Dev.
+ Individual (Intercept) 0.04185  0.2046  
+ Residual               0.01266  0.1125  
+Number of obs: 120, groups:  Individual, 31
+
+Fixed effects:
+                            Estimate Std. Error t value
+(Intercept)                  1.47060    0.07383  19.919
+Speciessuecica              -0.17007    0.10441  -1.629
+Speciesthaliana              0.18573    0.10300   1.803
+Primercox2                   0.70644    0.05032  14.040
+Primernad7                   0.52525    0.05032  10.439
+Primerrps12                  0.55296    0.05032  10.990
+Speciessuecica:Primercox2   -0.14749    0.07116  -2.073
+Speciesthaliana:Primercox2  -0.98051    0.07219 -13.582
+Speciessuecica:Primernad7    0.27679    0.07116   3.890
+Speciesthaliana:Primernad7  -0.81845    0.07116 -11.502
+Speciessuecica:Primerrps12   0.16034    0.07116   2.253
+Speciesthaliana:Primerrps12 -0.33879    0.07116  -4.761
+
+Correlation of Fixed Effects:
+            (Intr) Spcssc Spcsth Prmrc2 Prmrn7 Prmr12 Spcss:P2 Spcst:P2
+Speciessucc -0.707                                                     
+Speciesthln -0.717  0.507                                              
+Primercox2  -0.341  0.241  0.244                                       
+Primernad7  -0.341  0.241  0.244  0.500                                
+Primerrps12 -0.341  0.241  0.244  0.500  0.500                         
+Spcsscc:Pr2  0.241 -0.341 -0.173 -0.707 -0.354 -0.354                  
+Spcsthln:P2  0.238 -0.168 -0.354 -0.697 -0.348 -0.348  0.493           
+Spcsscc:Pr7  0.241 -0.341 -0.173 -0.354 -0.707 -0.354  0.500    0.246  
+Spcsthln:P7  0.241 -0.170 -0.345 -0.354 -0.707 -0.354  0.250    0.493  
+Spcsscc:P12  0.241 -0.341 -0.173 -0.354 -0.354 -0.707  0.500    0.246  
+Spcsthl:P12  0.241 -0.170 -0.345 -0.354 -0.354 -0.707  0.250    0.493  
+            Spcss:P7 Spcst:P7 Spcss:P12
+Speciessucc                            
+Speciesthln                            
+Primercox2                             
+Primernad7                             
+Primerrps12                            
+Spcsscc:Pr2                            
+Spcsthln:P2                            
+Spcsscc:Pr7                            
+Spcsthln:P7  0.500                     
+Spcsscc:P12  0.500    0.250            
+Spcsthl:P12  0.250    0.500    0.500   
+[1] "emmeans(aam2, pairwise ~ Species, lmer.df = 'satterthwaite', adjust = 'holm')"
+$emmeans
+ Species  emmean     SE   df lower.CL upper.CL
+ arenosa    1.92 0.0671 27.8     1.78     2.05
+ suecica    1.82 0.0671 27.8     1.68     1.96
+ thaliana   1.57 0.0646 28.7     1.44     1.70
+
+Results are averaged over the levels of: Primer 
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast           estimate     SE   df t.ratio p.value
+ arenosa - suecica    0.0977 0.0949 27.8 1.029   0.3122 
+ arenosa - thaliana   0.3487 0.0931 28.2 3.745   0.0025 
+ suecica - thaliana   0.2511 0.0931 28.2 2.696   0.0234 
+
+Results are averaged over the levels of: Primer 
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+P value adjustment: holm method for 3 tests 
+
+[1] "emmeans(aam2, pairwise ~ Primer, lmer.df = 'satterthwaite', adjust = 'none')"
+$emmeans
+ Primer emmean     SE   df lower.CL upper.CL
+ atp6     1.48 0.0422 41.0     1.39     1.56
+ cox2     1.81 0.0422 40.8     1.72     1.89
+ nad7     1.82 0.0422 41.0     1.74     1.91
+ rps12    1.97 0.0422 41.0     1.88     2.05
+
+Results are averaged over the levels of: Species 
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast     estimate     SE   df t.ratio p.value
+ atp6 - cox2   -0.3304 0.0293 80.9 -11.265 <.0001 
+ atp6 - nad7   -0.3447 0.0291 80.2 -11.866 <.0001 
+ atp6 - rps12  -0.4935 0.0291 80.2 -16.987 <.0001 
+ cox2 - nad7   -0.0143 0.0293 80.9  -0.486 0.6282 
+ cox2 - rps12  -0.1630 0.0293 80.9  -5.558 <.0001 
+ nad7 - rps12  -0.1488 0.0291 80.2  -5.122 <.0001 
+
+Results are averaged over the levels of: Species 
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+
+[1] "emmeans(aam2, pairwise ~ Species*Primer, lmer.df = 'satterthwaite', adjust = 'none')"
+$emmeans
+ Species  Primer emmean     SE   df lower.CL upper.CL
+ arenosa  atp6     1.47 0.0738 40.1     1.32     1.62
+ suecica  atp6     1.30 0.0738 40.1     1.15     1.45
+ thaliana atp6     1.66 0.0718 42.7     1.51     1.80
+ arenosa  cox2     2.18 0.0738 40.1     2.03     2.33
+ suecica  cox2     1.86 0.0738 40.1     1.71     2.01
+ thaliana cox2     1.38 0.0715 42.3     1.24     1.53
+ arenosa  nad7     2.00 0.0738 40.1     1.85     2.15
+ suecica  nad7     2.10 0.0738 40.1     1.95     2.25
+ thaliana nad7     1.36 0.0718 42.7     1.22     1.51
+ arenosa  rps12    2.02 0.0738 40.1     1.87     2.17
+ suecica  rps12    2.01 0.0738 40.1     1.86     2.16
+ thaliana rps12    1.87 0.0718 42.7     1.73     2.02
+
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast                       estimate     SE   df t.ratio p.value
+ arenosa atp6 - suecica atp6     0.17007 0.1044 40.1   1.629 0.1112 
+ arenosa atp6 - thaliana atp6   -0.18573 0.1030 41.4  -1.803 0.0787 
+ arenosa atp6 - arenosa cox2    -0.70644 0.0503 80.2 -14.040 <.0001 
+ arenosa atp6 - suecica cox2    -0.38889 0.1044 40.1  -3.725 0.0006 
+ arenosa atp6 - thaliana cox2    0.08834 0.1027 41.2   0.860 0.3949 
+ arenosa atp6 - arenosa nad7    -0.52525 0.0503 80.2 -10.439 <.0001 
+ arenosa atp6 - suecica nad7    -0.63198 0.1044 40.1  -6.053 <.0001 
+ arenosa atp6 - thaliana nad7    0.10747 0.1030 41.4   1.043 0.3028 
+ arenosa atp6 - arenosa rps12   -0.55296 0.0503 80.2 -10.990 <.0001 
+ arenosa atp6 - suecica rps12   -0.54323 0.1044 40.1  -5.203 <.0001 
+ arenosa atp6 - thaliana rps12  -0.39990 0.1030 41.4  -3.882 0.0004 
+ suecica atp6 - thaliana atp6   -0.35580 0.1030 41.4  -3.454 0.0013 
+ suecica atp6 - arenosa cox2    -0.87651 0.1044 40.1  -8.395 <.0001 
+ suecica atp6 - suecica cox2    -0.55895 0.0503 80.2 -11.109 <.0001 
+ suecica atp6 - thaliana cox2   -0.08172 0.1027 41.2  -0.795 0.4310 
+ suecica atp6 - arenosa nad7    -0.69532 0.1044 40.1  -6.660 <.0001 
+ suecica atp6 - suecica nad7    -0.80204 0.0503 80.2 -15.940 <.0001 
+ suecica atp6 - thaliana nad7   -0.06259 0.1030 41.4  -0.608 0.5467 
+ suecica atp6 - arenosa rps12   -0.72303 0.1044 40.1  -6.925 <.0001 
+ suecica atp6 - suecica rps12   -0.71330 0.0503 80.2 -14.176 <.0001 
+ suecica atp6 - thaliana rps12  -0.56997 0.1030 41.4  -5.533 <.0001 
+ thaliana atp6 - arenosa cox2   -0.52071 0.1030 41.4  -5.055 <.0001 
+ thaliana atp6 - suecica cox2   -0.20316 0.1030 41.4  -1.972 0.0553 
+ thaliana atp6 - thaliana cox2   0.27407 0.0518 82.2   5.294 <.0001 
+ thaliana atp6 - arenosa nad7   -0.33952 0.1030 41.4  -3.296 0.0020 
+ thaliana atp6 - suecica nad7   -0.44625 0.1030 41.4  -4.332 0.0001 
+ thaliana atp6 - thaliana nad7   0.29320 0.0503 80.2   5.827 <.0001 
+ thaliana atp6 - arenosa rps12  -0.36723 0.1030 41.4  -3.565 0.0009 
+ thaliana atp6 - suecica rps12  -0.35750 0.1030 41.4  -3.471 0.0012 
+ thaliana atp6 - thaliana rps12 -0.21417 0.0503 80.2  -4.256 0.0001 
+ arenosa cox2 - suecica cox2     0.31755 0.1044 40.1   3.041 0.0041 
+ arenosa cox2 - thaliana cox2    0.79478 0.1027 41.2   7.735 <.0001 
+ arenosa cox2 - arenosa nad7     0.18119 0.0503 80.2   3.601 0.0005 
+ arenosa cox2 - suecica nad7     0.07446 0.1044 40.1   0.713 0.4798 
+ arenosa cox2 - thaliana nad7    0.81391 0.1030 41.4   7.902 <.0001 
+ arenosa cox2 - arenosa rps12    0.15348 0.0503 80.2   3.050 0.0031 
+ arenosa cox2 - suecica rps12    0.16321 0.1044 40.1   1.563 0.1259 
+ arenosa cox2 - thaliana rps12   0.30654 0.1030 41.4   2.976 0.0049 
+ suecica cox2 - thaliana cox2    0.47723 0.1027 41.2   4.645 <.0001 
+ suecica cox2 - arenosa nad7    -0.13636 0.1044 40.1  -1.306 0.1990 
+ suecica cox2 - suecica nad7    -0.24309 0.0503 80.2  -4.831 <.0001 
+ suecica cox2 - thaliana nad7    0.49636 0.1030 41.4   4.819 <.0001 
+ suecica cox2 - arenosa rps12   -0.16408 0.1044 40.1  -1.571 0.1239 
+ suecica cox2 - suecica rps12   -0.15435 0.0503 80.2  -3.068 0.0029 
+ suecica cox2 - thaliana rps12  -0.01101 0.1030 41.4  -0.107 0.9154 
+ thaliana cox2 - arenosa nad7   -0.61359 0.1027 41.2  -5.972 <.0001 
+ thaliana cox2 - suecica nad7   -0.72032 0.1027 41.2  -7.011 <.0001 
+ thaliana cox2 - thaliana nad7   0.01913 0.0518 82.2   0.369 0.7127 
+ thaliana cox2 - arenosa rps12  -0.64131 0.1027 41.2  -6.242 <.0001 
+ thaliana cox2 - suecica rps12  -0.63158 0.1027 41.2  -6.147 <.0001 
+ thaliana cox2 - thaliana rps12 -0.48824 0.0518 82.2  -9.431 <.0001 
+ arenosa nad7 - suecica nad7    -0.10673 0.1044 40.1  -1.022 0.3128 
+ arenosa nad7 - thaliana nad7    0.63272 0.1030 41.4   6.143 <.0001 
+ arenosa nad7 - arenosa rps12   -0.02771 0.0503 80.2  -0.551 0.5833 
+ arenosa nad7 - suecica rps12   -0.01798 0.1044 40.1  -0.172 0.8641 
+ arenosa nad7 - thaliana rps12   0.12535 0.1030 41.4   1.217 0.2305 
+ suecica nad7 - thaliana nad7    0.73945 0.1030 41.4   7.179 <.0001 
+ suecica nad7 - arenosa rps12    0.07901 0.1044 40.1   0.757 0.4536 
+ suecica nad7 - suecica rps12    0.08874 0.0503 80.2   1.764 0.0816 
+ suecica nad7 - thaliana rps12   0.23208 0.1030 41.4   2.253 0.0296 
+ thaliana nad7 - arenosa rps12  -0.66044 0.1030 41.4  -6.412 <.0001 
+ thaliana nad7 - suecica rps12  -0.65070 0.1030 41.4  -6.317 <.0001 
+ thaliana nad7 - thaliana rps12 -0.50737 0.0503 80.2 -10.084 <.0001 
+ arenosa rps12 - suecica rps12   0.00973 0.1044 40.1   0.093 0.9262 
+ arenosa rps12 - thaliana rps12  0.15306 0.1030 41.4   1.486 0.1449 
+ suecica rps12 - thaliana rps12  0.14333 0.1030 41.4   1.392 0.1715 
+
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+

@@ -1,0 +1,236 @@
+[1] "acp1 <- lmer(log(copiesPerNuc) ~ as.factor(Ploidy)*Primer +(1|Individual), data = MyData)"
+[1] "shapiro.test(residuals(acp1))"
+
+	Shapiro-Wilk normality test
+
+data:  residuals(acp1)
+W = 0.93822, p-value = 3.253e-05
+
+[1] "qqPlot(residuals(acp1))"
+[1] 106  74
+[1] "plot(acp1)"
+[1] "Anova(acp1, type=3)"
+Analysis of Deviance Table (Type III Wald chisquare tests)
+
+Response: log(copiesPerNuc)
+                             Chisq Df Pr(>Chisq)    
+(Intercept)              4213.0390  1     <2e-16 ***
+as.factor(Ploidy)         126.7979  2     <2e-16 ***
+Primer                      1.3039  3     0.7282    
+as.factor(Ploidy):Primer    4.7764  6     0.5728    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+[1] "summary(acp1)"
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: log(copiesPerNuc) ~ as.factor(Ploidy) * Primer + (1 | Individual)
+   Data: MyData
+
+REML criterion at convergence: -46.2
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.5154 -0.4365  0.0495  0.4624  3.2640 
+
+Random effects:
+ Groups     Name        Variance Std.Dev.
+ Individual (Intercept) 0.05431  0.233   
+ Residual               0.01465  0.121   
+Number of obs: 120, groups:  Individual, 31
+
+Fixed effects:
+                               Estimate Std. Error        df t value Pr(>|t|)
+(Intercept)                    5.236325   0.080673 39.910346  64.908  < 2e-16
+as.factor(Ploidy)4             0.678740   0.115776 38.669592   5.863 8.28e-07
+as.factor(Ploidy)8             1.302615   0.115776 38.669592  11.251 9.20e-14
+PrimerndhB                    -0.014702   0.054128 79.050935  -0.272    0.787
+PrimerndhH                     0.043314   0.054128 79.050935   0.800    0.426
+PrimerpsaA                     0.021027   0.055726 80.918166   0.377    0.707
+as.factor(Ploidy)4:PrimerndhB  0.029221   0.076549 79.050935   0.382    0.704
+as.factor(Ploidy)8:PrimerndhB -0.019290   0.076549 79.050935  -0.252    0.802
+as.factor(Ploidy)4:PrimerndhH  0.002305   0.076549 79.050935   0.030    0.976
+as.factor(Ploidy)8:PrimerndhH -0.077802   0.076549 79.050935  -1.016    0.313
+as.factor(Ploidy)4:PrimerpsaA  0.119982   0.077687 80.011318   1.544    0.126
+as.factor(Ploidy)8:PrimerpsaA  0.051008   0.077687 80.011318   0.657    0.513
+                                 
+(Intercept)                   ***
+as.factor(Ploidy)4            ***
+as.factor(Ploidy)8            ***
+PrimerndhB                       
+PrimerndhH                       
+PrimerpsaA                       
+as.factor(Ploidy)4:PrimerndhB    
+as.factor(Ploidy)8:PrimerndhB    
+as.factor(Ploidy)4:PrimerndhH    
+as.factor(Ploidy)8:PrimerndhH    
+as.factor(Ploidy)4:PrimerpsaA    
+as.factor(Ploidy)8:PrimerpsaA    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) as.(P)4 as.(P)8 PrmrnB PrmrnH PrmrpA a.(P)4:PB a.(P)8:PB
+as.fctr(P)4 -0.697                                                         
+as.fctr(P)8 -0.697  0.486                                                  
+PrimerndhB  -0.335  0.234   0.234                                          
+PrimerndhH  -0.335  0.234   0.234   0.500                                  
+PrimerpsaA  -0.352  0.246   0.246   0.486  0.486                           
+as.f(P)4:PB  0.237 -0.331  -0.165  -0.707 -0.354 -0.343                    
+as.f(P)8:PB  0.237 -0.165  -0.331  -0.707 -0.354 -0.343  0.500             
+as.f(P)4:PH  0.237 -0.331  -0.165  -0.354 -0.707 -0.343  0.500     0.250   
+as.f(P)8:PH  0.237 -0.165  -0.331  -0.354 -0.707 -0.343  0.250     0.500   
+as.f(P)4:PA  0.253 -0.339  -0.176  -0.348 -0.348 -0.717  0.493     0.246   
+as.f(P)8:PA  0.253 -0.176  -0.339  -0.348 -0.348 -0.717  0.246     0.493   
+            a.(P)4:PH a.(P)8:PH a.(P)4:PA
+as.fctr(P)4                              
+as.fctr(P)8                              
+PrimerndhB                               
+PrimerndhH                               
+PrimerpsaA                               
+as.f(P)4:PB                              
+as.f(P)8:PB                              
+as.f(P)4:PH                              
+as.f(P)8:PH  0.500                       
+as.f(P)4:PA  0.493     0.246             
+as.f(P)8:PA  0.246     0.493     0.515   
+[1] "emmeans(acp1, pairwise ~ as.factor(Ploidy), lmer.df = 'satterthwaite', adjust = 'holm')"
+$emmeans
+ Ploidy emmean     SE   df lower.CL upper.CL
+      2   5.25 0.0732 27.5     5.10     5.40
+      4   5.97 0.0761 26.7     5.81     6.12
+      8   6.54 0.0761 26.7     6.38     6.70
+
+Results are averaged over the levels of: Primer 
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast estimate    SE   df t.ratio p.value
+ 2 - 4      -0.717 0.106 27.1  -6.784 <.0001 
+ 2 - 8      -1.291 0.106 27.1 -12.223 <.0001 
+ 4 - 8      -0.574 0.108 26.7  -5.335 <.0001 
+
+Results are averaged over the levels of: Primer 
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+P value adjustment: holm method for 3 tests 
+
+[1] "emmeans(acp1, pairwise ~ Primer, lmer.df = 'satterthwaite', adjust = 'none')"
+$emmeans
+ Primer emmean     SE   df lower.CL upper.CL
+ clpP     5.90 0.0475 38.3     5.80     5.99
+ ndhB     5.89 0.0475 38.3     5.79     5.98
+ ndhH     5.91 0.0475 38.3     5.82     6.01
+ psaA     5.97 0.0474 38.1     5.88     6.07
+
+Results are averaged over the levels of: Ploidy 
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast    estimate     SE   df t.ratio p.value
+ clpP - ndhB   0.0114 0.0313 79.0  0.365  0.7164 
+ clpP - ndhH  -0.0181 0.0313 79.0 -0.581  0.5631 
+ clpP - psaA  -0.0780 0.0316 79.7 -2.472  0.0156 
+ ndhB - ndhH  -0.0295 0.0313 79.0 -0.945  0.3474 
+ ndhB - psaA  -0.0894 0.0316 79.7 -2.833  0.0058 
+ ndhH - psaA  -0.0599 0.0316 79.7 -1.897  0.0614 
+
+Results are averaged over the levels of: Ploidy 
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+
+[1] "emmeans(acp1, pairwise ~ as.factor(Ploidy)*Primer, lmer.df = 'satterthwaite', adjust = 'none')"
+$emmeans
+ Ploidy Primer emmean     SE   df lower.CL upper.CL
+      2 clpP     5.24 0.0807 39.9     5.07     5.40
+      4 clpP     5.92 0.0830 37.5     5.75     6.08
+      8 clpP     6.54 0.0830 37.5     6.37     6.71
+      2 ndhB     5.22 0.0807 39.9     5.06     5.38
+      4 ndhB     5.93 0.0830 37.5     5.76     6.10
+      8 ndhB     6.50 0.0830 37.5     6.34     6.67
+      2 ndhH     5.28 0.0807 39.9     5.12     5.44
+      4 ndhH     5.96 0.0830 37.5     5.79     6.13
+      8 ndhH     6.50 0.0830 37.5     6.34     6.67
+      2 psaA     5.26 0.0803 39.5     5.10     5.42
+      4 psaA     6.06 0.0830 37.5     5.89     6.22
+      8 psaA     6.61 0.0830 37.5     6.44     6.78
+
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast         estimate     SE   df t.ratio p.value
+ 2 clpP - 4 clpP -0.678740 0.1158 38.7  -5.863 <.0001 
+ 2 clpP - 8 clpP -1.302615 0.1158 38.7 -11.251 <.0001 
+ 2 clpP - 2 ndhB  0.014702 0.0541 79.0   0.272 0.7866 
+ 2 clpP - 4 ndhB -0.693260 0.1158 38.7  -5.988 <.0001 
+ 2 clpP - 8 ndhB -1.268623 0.1158 38.7 -10.958 <.0001 
+ 2 clpP - 2 ndhH -0.043314 0.0541 79.0  -0.800 0.4260 
+ 2 clpP - 4 ndhH -0.724359 0.1158 38.7  -6.257 <.0001 
+ 2 clpP - 8 ndhH -1.268126 0.1158 38.7 -10.953 <.0001 
+ 2 clpP - 2 psaA -0.021027 0.0557 80.9  -0.377 0.7069 
+ 2 clpP - 4 psaA -0.819749 0.1158 38.7  -7.080 <.0001 
+ 2 clpP - 8 psaA -1.374650 0.1158 38.7 -11.873 <.0001 
+ 4 clpP - 8 clpP -0.623874 0.1174 37.5  -5.312 <.0001 
+ 4 clpP - 2 ndhB  0.693442 0.1158 38.7   5.990 <.0001 
+ 4 clpP - 4 ndhB -0.014519 0.0541 79.0  -0.268 0.7892 
+ 4 clpP - 8 ndhB -0.589883 0.1174 37.5  -5.023 <.0001 
+ 4 clpP - 2 ndhH  0.635427 0.1158 38.7   5.488 <.0001 
+ 4 clpP - 4 ndhH -0.045618 0.0541 79.0  -0.843 0.4019 
+ 4 clpP - 8 ndhH -0.589386 0.1174 37.5  -5.019 <.0001 
+ 4 clpP - 2 psaA  0.657714 0.1155 38.5   5.695 <.0001 
+ 4 clpP - 4 psaA -0.141009 0.0541 79.0  -2.605 0.0110 
+ 4 clpP - 8 psaA -0.695909 0.1174 37.5  -5.926 <.0001 
+ 8 clpP - 2 ndhB  1.317317 0.1158 38.7  11.378 <.0001 
+ 8 clpP - 4 ndhB  0.609355 0.1174 37.5   5.189 <.0001 
+ 8 clpP - 8 ndhB  0.033992 0.0541 79.0   0.628 0.5318 
+ 8 clpP - 2 ndhH  1.259301 0.1158 38.7  10.877 <.0001 
+ 8 clpP - 4 ndhH  0.578256 0.1174 37.5   4.924 <.0001 
+ 8 clpP - 8 ndhH  0.034489 0.0541 79.0   0.637 0.5259 
+ 8 clpP - 2 psaA  1.281588 0.1155 38.5  11.096 <.0001 
+ 8 clpP - 4 psaA  0.482866 0.1174 37.5   4.112 0.0002 
+ 8 clpP - 8 psaA -0.072035 0.0541 79.0  -1.331 0.1871 
+ 2 ndhB - 4 ndhB -0.707962 0.1158 38.7  -6.115 <.0001 
+ 2 ndhB - 8 ndhB -1.283325 0.1158 38.7 -11.085 <.0001 
+ 2 ndhB - 2 ndhH -0.058016 0.0541 79.0  -1.072 0.2871 
+ 2 ndhB - 4 ndhH -0.739061 0.1158 38.7  -6.384 <.0001 
+ 2 ndhB - 8 ndhH -1.282828 0.1158 38.7 -11.080 <.0001 
+ 2 ndhB - 2 psaA -0.035729 0.0557 80.9  -0.641 0.5232 
+ 2 ndhB - 4 psaA -0.834451 0.1158 38.7  -7.207 <.0001 
+ 2 ndhB - 8 psaA -1.389352 0.1158 38.7 -12.000 <.0001 
+ 4 ndhB - 8 ndhB -0.575363 0.1174 37.5  -4.899 <.0001 
+ 4 ndhB - 2 ndhH  0.649946 0.1158 38.7   5.614 <.0001 
+ 4 ndhB - 4 ndhH -0.031099 0.0541 79.0  -0.575 0.5672 
+ 4 ndhB - 8 ndhH -0.574866 0.1174 37.5  -4.895 <.0001 
+ 4 ndhB - 2 psaA  0.672233 0.1155 38.5   5.820 <.0001 
+ 4 ndhB - 4 psaA -0.126489 0.0541 79.0  -2.337 0.0220 
+ 4 ndhB - 8 psaA -0.681390 0.1174 37.5  -5.802 <.0001 
+ 8 ndhB - 2 ndhH  1.225310 0.1158 38.7  10.583 <.0001 
+ 8 ndhB - 4 ndhH  0.544264 0.1174 37.5   4.634 <.0001 
+ 8 ndhB - 8 ndhH  0.000497 0.0541 79.0   0.009 0.9927 
+ 8 ndhB - 2 psaA  1.247596 0.1155 38.5  10.802 <.0001 
+ 8 ndhB - 4 psaA  0.448874 0.1174 37.5   3.822 0.0005 
+ 8 ndhB - 8 psaA -0.106026 0.0541 79.0  -1.959 0.0537 
+ 2 ndhH - 4 ndhH -0.681045 0.1158 38.7  -5.882 <.0001 
+ 2 ndhH - 8 ndhH -1.224812 0.1158 38.7 -10.579 <.0001 
+ 2 ndhH - 2 psaA  0.022287 0.0557 80.9   0.400 0.6903 
+ 2 ndhH - 4 psaA -0.776435 0.1158 38.7  -6.706 <.0001 
+ 2 ndhH - 8 psaA -1.331336 0.1158 38.7 -11.499 <.0001 
+ 4 ndhH - 8 ndhH -0.543767 0.1174 37.5  -4.630 <.0001 
+ 4 ndhH - 2 psaA  0.703332 0.1155 38.5   6.089 <.0001 
+ 4 ndhH - 4 psaA -0.095390 0.0541 79.0  -1.762 0.0819 
+ 4 ndhH - 8 psaA -0.650291 0.1174 37.5  -5.537 <.0001 
+ 8 ndhH - 2 psaA  1.247099 0.1155 38.5  10.797 <.0001 
+ 8 ndhH - 4 psaA  0.448377 0.1174 37.5   3.818 0.0005 
+ 8 ndhH - 8 psaA -0.106524 0.0541 79.0  -1.968 0.0526 
+ 2 psaA - 4 psaA -0.798722 0.1155 38.5  -6.915 <.0001 
+ 2 psaA - 8 psaA -1.353623 0.1155 38.5 -11.720 <.0001 
+ 4 psaA - 8 psaA -0.554901 0.1174 37.5  -4.725 <.0001 
+
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+

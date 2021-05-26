@@ -1,0 +1,155 @@
+[1] "awm2 <- lmer(log(copiesPerNucAdjusted) ~ as.factor(Ploidy)*Primer +(1|Individual), data = MyData)"
+[1] "shapiro.test(residuals(awm2))"
+
+	Shapiro-Wilk normality test
+
+data:  residuals(awm2)
+W = 0.97876, p-value = 0.2043
+
+[1] "qqPlot(residuals(awm2))"
+[1] 24 60
+[1] "plot(awm2)"
+[1] "Anova(awm2, type=3)"
+Analysis of Deviance Table (Type III Wald chisquare tests)
+
+Response: log(copiesPerNucAdjusted)
+                           Chisq Df Pr(>Chisq)    
+(Intercept)              77.7004  1  < 2.2e-16 ***
+as.factor(Ploidy)         2.7108  1   0.099670 .  
+Primer                   10.7073  3   0.013419 *  
+as.factor(Ploidy):Primer 15.9212  3   0.001177 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+[1] "summary(awm2)"
+Linear mixed model fit by REML ['lmerMod']
+Formula: log(copiesPerNucAdjusted) ~ as.factor(Ploidy) * Primer + (1 |  
+    Individual)
+   Data: MyData
+
+REML criterion at convergence: -22.9
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-1.9622 -0.4642 -0.1021  0.4679  2.8493 
+
+Random effects:
+ Groups     Name        Variance Std.Dev.
+ Individual (Intercept) 0.08533  0.2921  
+ Residual               0.01491  0.1221  
+Number of obs: 80, groups:  Individual, 20
+
+Fixed effects:
+                                Estimate Std. Error t value
+(Intercept)                     0.882536   0.100120   8.815
+as.factor(Ploidy)4             -0.233123   0.141591  -1.646
+Primercox2                     -0.089116   0.054612  -1.632
+Primernad7                     -0.013404   0.054612  -0.245
+Primerrps12                     0.088841   0.054612   1.627
+as.factor(Ploidy)4:Primercox2   0.184059   0.077234   2.383
+as.factor(Ploidy)4:Primernad7  -0.120535   0.077234  -1.561
+as.factor(Ploidy)4:Primerrps12 -0.002602   0.077234  -0.034
+
+Correlation of Fixed Effects:
+            (Intr) as.(P)4 Prmrc2 Prmrn7 Prmr12 a.(P)4:P2 a.(P)4:P7
+as.fctr(P)4 -0.707                                                 
+Primercox2  -0.273  0.193                                          
+Primernad7  -0.273  0.193   0.500                                  
+Primerrps12 -0.273  0.193   0.500  0.500                           
+as.f(P)4:P2  0.193 -0.273  -0.707 -0.354 -0.354                    
+as.f(P)4:P7  0.193 -0.273  -0.354 -0.707 -0.354  0.500             
+as.(P)4:P12  0.193 -0.273  -0.354 -0.354 -0.707  0.500     0.500   
+[1] "emmeans(awm2, pairwise ~ as.factor(Ploidy), lmer.df = 'satterthwaite', adjust = 'holm')"
+$emmeans
+ Ploidy emmean     SE df lower.CL upper.CL
+      2  0.879 0.0944 18    0.681    1.077
+      4  0.661 0.0944 18    0.463    0.859
+
+Results are averaged over the levels of: Primer 
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast estimate    SE df t.ratio p.value
+ 2 - 4       0.218 0.133 18 1.633   0.1199 
+
+Results are averaged over the levels of: Primer 
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+
+[1] "emmeans(awm2, pairwise ~ Primer, lmer.df = 'satterthwaite', adjust = 'none')"
+$emmeans
+ Primer emmean     SE   df lower.CL upper.CL
+ atp6    0.766 0.0708 22.7    0.619    0.913
+ cox2    0.769 0.0708 22.7    0.622    0.915
+ nad7    0.692 0.0708 22.7    0.546    0.839
+ rps12   0.854 0.0708 22.7    0.707    1.000
+
+Results are averaged over the levels of: Ploidy 
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast     estimate     SE df t.ratio p.value
+ atp6 - cox2  -0.00291 0.0386 54 -0.075  0.9401 
+ atp6 - nad7   0.07367 0.0386 54  1.908  0.0617 
+ atp6 - rps12 -0.08754 0.0386 54 -2.267  0.0274 
+ cox2 - nad7   0.07659 0.0386 54  1.983  0.0524 
+ cox2 - rps12 -0.08463 0.0386 54 -2.191  0.0328 
+ nad7 - rps12 -0.16121 0.0386 54 -4.175  0.0001 
+
+Results are averaged over the levels of: Ploidy 
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+
+[1] "emmeans(awm2, pairwise ~ as.factor(Ploidy)*Primer, lmer.df = 'satterthwaite', adjust = 'none')"
+$emmeans
+ Ploidy Primer emmean  SE   df lower.CL upper.CL
+      2 atp6    0.883 0.1 22.7    0.675    1.090
+      4 atp6    0.649 0.1 22.7    0.442    0.857
+      2 cox2    0.793 0.1 22.7    0.586    1.001
+      4 cox2    0.744 0.1 22.7    0.537    0.952
+      2 nad7    0.869 0.1 22.7    0.662    1.076
+      4 nad7    0.515 0.1 22.7    0.308    0.723
+      2 rps12   0.971 0.1 22.7    0.764    1.179
+      4 rps12   0.736 0.1 22.7    0.528    0.943
+
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast          estimate     SE   df t.ratio p.value
+ 2 atp6 - 4 atp6     0.2331 0.1416 22.7  1.646  0.1135 
+ 2 atp6 - 2 cox2     0.0891 0.0546 54.0  1.632  0.1085 
+ 2 atp6 - 4 cox2     0.1382 0.1416 22.7  0.976  0.3394 
+ 2 atp6 - 2 nad7     0.0134 0.0546 54.0  0.245  0.8070 
+ 2 atp6 - 4 nad7     0.3671 0.1416 22.7  2.592  0.0164 
+ 2 atp6 - 2 rps12   -0.0888 0.0546 54.0 -1.627  0.1096 
+ 2 atp6 - 4 rps12    0.1469 0.1416 22.7  1.037  0.3105 
+ 4 atp6 - 2 cox2    -0.1440 0.1416 22.7 -1.017  0.3198 
+ 4 atp6 - 4 cox2    -0.0949 0.0546 54.0 -1.738  0.0878 
+ 4 atp6 - 2 nad7    -0.2197 0.1416 22.7 -1.552  0.1346 
+ 4 atp6 - 4 nad7     0.1339 0.0546 54.0  2.453  0.0174 
+ 4 atp6 - 2 rps12   -0.3220 0.1416 22.7 -2.274  0.0328 
+ 4 atp6 - 4 rps12   -0.0862 0.0546 54.0 -1.579  0.1202 
+ 2 cox2 - 4 cox2     0.0491 0.1416 22.7  0.347  0.7321 
+ 2 cox2 - 2 nad7    -0.0757 0.0546 54.0 -1.386  0.1713 
+ 2 cox2 - 4 nad7     0.2779 0.1416 22.7  1.963  0.0620 
+ 2 cox2 - 2 rps12   -0.1780 0.0546 54.0 -3.259  0.0019 
+ 2 cox2 - 4 rps12    0.0578 0.1416 22.7  0.408  0.6871 
+ 4 cox2 - 2 nad7    -0.1248 0.1416 22.7 -0.881  0.3874 
+ 4 cox2 - 4 nad7     0.2289 0.0546 54.0  4.191  0.0001 
+ 4 cox2 - 2 rps12   -0.2270 0.1416 22.7 -1.603  0.1227 
+ 4 cox2 - 4 rps12    0.0087 0.0546 54.0  0.159  0.8740 
+ 2 nad7 - 4 nad7     0.3537 0.1416 22.7  2.498  0.0202 
+ 2 nad7 - 2 rps12   -0.1022 0.0546 54.0 -1.872  0.0666 
+ 2 nad7 - 4 rps12    0.1335 0.1416 22.7  0.943  0.3558 
+ 4 nad7 - 2 rps12   -0.4559 0.1416 22.7 -3.220  0.0038 
+ 4 nad7 - 4 rps12   -0.2202 0.0546 54.0 -4.032  0.0002 
+ 2 rps12 - 4 rps12   0.2357 0.1416 22.7  1.665  0.1097 
+
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+

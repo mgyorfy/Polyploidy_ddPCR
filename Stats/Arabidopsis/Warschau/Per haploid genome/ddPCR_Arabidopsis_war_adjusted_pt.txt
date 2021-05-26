@@ -1,0 +1,155 @@
+[1] "awp2 <- lmer(log(copiesPerNucAdjusted) ~ as.factor(Ploidy)*Primer +(1|Individual), data = MyData)"
+[1] "shapiro.test(residuals(awp2))"
+
+	Shapiro-Wilk normality test
+
+data:  residuals(awp2)
+W = 0.97415, p-value = 0.1045
+
+[1] "qqPlot(residuals(awp2))"
+[1] 67 66
+[1] "plot(awp2)"
+[1] "Anova(awp2, type=3)"
+Analysis of Deviance Table (Type III Wald chisquare tests)
+
+Response: log(copiesPerNucAdjusted)
+                             Chisq Df Pr(>Chisq)    
+(Intercept)              1211.0089  1  < 2.2e-16 ***
+as.factor(Ploidy)           8.1891  1   0.004214 ** 
+Primer                      2.4491  3   0.484555    
+as.factor(Ploidy):Primer    1.1683  3   0.760606    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+[1] "summary(awp2)"
+Linear mixed model fit by REML ['lmerMod']
+Formula: log(copiesPerNucAdjusted) ~ as.factor(Ploidy) * Primer + (1 |  
+    Individual)
+   Data: MyData
+
+REML criterion at convergence: -7.3
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-2.77049 -0.35853 -0.04643  0.61205  1.78608 
+
+Random effects:
+ Groups     Name        Variance Std.Dev.
+ Individual (Intercept) 0.15019  0.3875  
+ Residual               0.01657  0.1287  
+Number of obs: 80, groups:  Individual, 20
+
+Fixed effects:
+                              Estimate Std. Error t value
+(Intercept)                    4.49395    0.12914  34.800
+as.factor(Ploidy)4            -0.52262    0.18263  -2.862
+PrimerndhB                    -0.01898    0.05758  -0.330
+PrimerndhH                     0.05525    0.05758   0.960
+PrimerpsaA                     0.05011    0.05758   0.870
+as.factor(Ploidy)4:PrimerndhB -0.03589    0.08142  -0.441
+as.factor(Ploidy)4:PrimerndhH -0.04186    0.08142  -0.514
+as.factor(Ploidy)4:PrimerpsaA  0.03570    0.08142   0.438
+
+Correlation of Fixed Effects:
+            (Intr) as.(P)4 PrmrnB PrmrnH PrmrpA a.(P)4:PB a.(P)4:PH
+as.fctr(P)4 -0.707                                                 
+PrimerndhB  -0.223  0.158                                          
+PrimerndhH  -0.223  0.158   0.500                                  
+PrimerpsaA  -0.223  0.158   0.500  0.500                           
+as.f(P)4:PB  0.158 -0.223  -0.707 -0.354 -0.354                    
+as.f(P)4:PH  0.158 -0.223  -0.354 -0.707 -0.354  0.500             
+as.f(P)4:PA  0.158 -0.223  -0.354 -0.354 -0.707  0.500     0.500   
+[1] "emmeans(awp2, pairwise ~ as.factor(Ploidy), lmer.df = 'satterthwaite', adjust = 'holm')"
+$emmeans
+ Ploidy emmean    SE df lower.CL upper.CL
+      2   4.52 0.124 18     4.25     4.78
+      4   3.98 0.124 18     3.72     4.24
+
+Results are averaged over the levels of: Primer 
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast estimate    SE df t.ratio p.value
+ 2 - 4       0.533 0.176 18 3.035   0.0071 
+
+Results are averaged over the levels of: Primer 
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+
+[1] "emmeans(awp2, pairwise ~ Primer, lmer.df = 'satterthwaite', adjust = 'none')"
+$emmeans
+ Primer emmean     SE df lower.CL upper.CL
+ clpP     4.23 0.0913 21     4.04     4.42
+ ndhB     4.20 0.0913 21     4.01     4.39
+ ndhH     4.27 0.0913 21     4.08     4.46
+ psaA     4.30 0.0913 21     4.11     4.49
+
+Results are averaged over the levels of: Ploidy 
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast    estimate     SE df t.ratio p.value
+ clpP - ndhB   0.0369 0.0407 54  0.907  0.3684 
+ clpP - ndhH  -0.0343 0.0407 54 -0.843  0.4029 
+ clpP - psaA  -0.0680 0.0407 54 -1.669  0.1008 
+ ndhB - ndhH  -0.0713 0.0407 54 -1.750  0.0858 
+ ndhB - psaA  -0.1049 0.0407 54 -2.576  0.0127 
+ ndhH - psaA  -0.0336 0.0407 54 -0.826  0.4123 
+
+Results are averaged over the levels of: Ploidy 
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+
+[1] "emmeans(awp2, pairwise ~ as.factor(Ploidy)*Primer, lmer.df = 'satterthwaite', adjust = 'none')"
+$emmeans
+ Ploidy Primer emmean    SE df lower.CL upper.CL
+      2 clpP     4.49 0.129 21     4.23     4.76
+      4 clpP     3.97 0.129 21     3.70     4.24
+      2 ndhB     4.47 0.129 21     4.21     4.74
+      4 ndhB     3.92 0.129 21     3.65     4.19
+      2 ndhH     4.55 0.129 21     4.28     4.82
+      4 ndhH     3.98 0.129 21     3.72     4.25
+      2 psaA     4.54 0.129 21     4.28     4.81
+      4 psaA     4.06 0.129 21     3.79     4.33
+
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast        estimate     SE df t.ratio p.value
+ 2 clpP - 4 clpP  0.52262 0.1826 21  2.862  0.0093 
+ 2 clpP - 2 ndhB  0.01898 0.0576 54  0.330  0.7429 
+ 2 clpP - 4 ndhB  0.57750 0.1826 21  3.162  0.0047 
+ 2 clpP - 2 ndhH -0.05525 0.0576 54 -0.960  0.3415 
+ 2 clpP - 4 ndhH  0.50923 0.1826 21  2.788  0.0110 
+ 2 clpP - 2 psaA -0.05011 0.0576 54 -0.870  0.3879 
+ 2 clpP - 4 psaA  0.43681 0.1826 21  2.392  0.0262 
+ 4 clpP - 2 ndhB -0.50364 0.1826 21 -2.758  0.0118 
+ 4 clpP - 4 ndhB  0.05488 0.0576 54  0.953  0.3448 
+ 4 clpP - 2 ndhH -0.57788 0.1826 21 -3.164  0.0047 
+ 4 clpP - 4 ndhH -0.01339 0.0576 54 -0.233  0.8170 
+ 4 clpP - 2 psaA -0.57274 0.1826 21 -3.136  0.0050 
+ 4 clpP - 4 psaA -0.08581 0.0576 54 -1.490  0.1419 
+ 2 ndhB - 4 ndhB  0.55852 0.1826 21  3.058  0.0060 
+ 2 ndhB - 2 ndhH -0.07424 0.0576 54 -1.289  0.2027 
+ 2 ndhB - 4 ndhH  0.49025 0.1826 21  2.684  0.0139 
+ 2 ndhB - 2 psaA -0.06910 0.0576 54 -1.200  0.2353 
+ 2 ndhB - 4 psaA  0.41783 0.1826 21  2.288  0.0326 
+ 4 ndhB - 2 ndhH -0.63275 0.1826 21 -3.465  0.0023 
+ 4 ndhB - 4 ndhH -0.06827 0.0576 54 -1.186  0.2409 
+ 4 ndhB - 2 psaA -0.62761 0.1826 21 -3.437  0.0025 
+ 4 ndhB - 4 psaA -0.14069 0.0576 54 -2.444  0.0178 
+ 2 ndhH - 4 ndhH  0.56449 0.1826 21  3.091  0.0055 
+ 2 ndhH - 2 psaA  0.00514 0.0576 54  0.089  0.9292 
+ 2 ndhH - 4 psaA  0.49207 0.1826 21  2.694  0.0136 
+ 4 ndhH - 2 psaA -0.55935 0.1826 21 -3.063  0.0059 
+ 4 ndhH - 4 psaA -0.07242 0.0576 54 -1.258  0.2139 
+ 2 psaA - 4 psaA  0.48692 0.1826 21  2.666  0.0145 
+
+Degrees-of-freedom method: satterthwaite 
+Results are given on the log (not the response) scale. 
+
