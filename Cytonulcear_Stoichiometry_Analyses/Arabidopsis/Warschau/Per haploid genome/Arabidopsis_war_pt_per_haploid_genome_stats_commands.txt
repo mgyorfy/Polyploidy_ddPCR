@@ -1,0 +1,29 @@
+##Arabidopsis_war_pt_per_haploid_genome##
+
+>library(ggplot2)
+
+>library(car)
+
+>library(lme4)
+
+>library(emmeans)
+
+> MyData = read.csv("Arabidopsis/ddPCR_Arabidopsis_war_pt.csv")
+
+> awp2 <- lmer(log(copiesPerNucAdjusted) ~ as.factor(Ploidy)*Primer +(1|Individual), data = MyData)
+
+> shapiro.test(residuals(awp2))
+
+> qqPlot(residuals(awp2))
+
+> plot(awp2)
+
+> Anova(awp2, type="III")
+
+> summary(awp2)
+
+> emmeans(awp2, pairwise ~ as.factor(Ploidy), lmer.df = 'satterthwaite', adjust = 'holm')
+
+> emmeans(awp2, pairwise ~ Primer, lmer.df = 'satterthwaite', adjust = 'none')
+
+> emmeans(awp2, pairwise ~ as.factor(Ploidy)*Primer, lmer.df = 'satterthwaite', adjust = 'none')

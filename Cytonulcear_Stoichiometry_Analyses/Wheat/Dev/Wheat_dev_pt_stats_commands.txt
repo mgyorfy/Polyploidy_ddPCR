@@ -1,0 +1,29 @@
+##wheat_dev_pt##
+
+>library(ggplot2)
+
+>library(car)
+
+>library(lme4)
+
+>library(emmeans)
+
+> MyData = read.csv("Wheat/ddPCR_As_dev_pt.csv")
+
+> wdp1 <- lmer(log(copiesPerNuc) ~ SamplingTime*Primer +(1|Individual), data = MyData)
+
+> shapiro.test(residuals(wdp1))
+
+> qqPlot(residuals(wdp1))
+
+> plot(wdp1)
+
+> Anova(wdp1, type="III")
+
+> summary(wdp1)
+
+> emmeans(wdp1, pairwise ~ SamplingTime, lmer.df = 'satterthwaite', adjust = 'holm')
+
+> emmeans(wdp1, pairwise ~ Primer, lmer.df = 'satterthwaite', adjust = 'none')
+
+> emmeans(wdp1, pairwise ~ SamplingTime*Primer, lmer.df = 'satterthwaite', adjust = 'none')

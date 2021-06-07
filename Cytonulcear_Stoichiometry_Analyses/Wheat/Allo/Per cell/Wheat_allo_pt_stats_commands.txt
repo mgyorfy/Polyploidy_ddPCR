@@ -1,0 +1,29 @@
+##wheat_allo_pt##
+
+>library(ggplot2)
+
+>library(car)
+
+>library(lme4)
+
+>library(emmeans)
+
+> MyData = read.csv("Wheat/ddPCR_Wheat_allo_pt.csv")
+
+> wap1 <- lmer(log(copiesPerNuc) ~ Species*Primer +(1|Individual), data = MyData)
+
+> shapiro.test(residuals(wap1))
+
+> qqPlot(residuals(wap1))
+
+> plot(wap1)
+
+> Anova(wap1, type="III")
+
+> summary(wap1)
+
+> emmeans(wap1, pairwise ~ Species, lmer.df = 'satterthwaite', adjust = 'holm')
+
+> emmeans(wap1, pairwise ~ Primer, lmer.df = 'satterthwaite', adjust = 'none')
+
+> emmeans(wap1, pairwise ~ Species*Primer, lmer.df = 'satterthwaite', adjust = 'none')

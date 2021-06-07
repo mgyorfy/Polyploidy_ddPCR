@@ -1,0 +1,29 @@
+##Arabidopsis_allo_pt_per_haploid_genome##
+
+>library(ggplot2)
+
+>library(car)
+
+>library(lme4)
+
+>library(emmeans)
+
+> MyData = read.csv("Arabidopsis/ddPCR_Arabidopsis_allo_pt.csv")
+
+> aap2 <- lmer(log(copiesPerNucAdjusted) ~ Species*Primer +(1|Individual), data = MyData)
+
+> shapiro.test(residuals(aap2))
+
+> qqPlot(residuals(aap2))
+
+> plot(aap2)
+
+> Anova(aap2, type="III")
+
+> summary(aap2)
+
+> emmeans(aap2, pairwise ~ Species, lmer.df = 'satterthwaite', adjust = 'holm')
+
+> emmeans(aap2, pairwise ~ Primer, lmer.df = 'satterthwaite', adjust = 'none')
+
+> emmeans(aap2, pairwise ~ Species*Primer, lmer.df = 'satterthwaite', adjust = 'none')
